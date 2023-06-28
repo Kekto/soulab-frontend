@@ -1,14 +1,14 @@
 <template>
-  <FormComponent/>
+  <defaultPage/>
 </template>
 
 <script>
-import FormComponent from './components/FormComponent.vue';
+import defaultPage from './pages/defaultPage.vue'
 
 export default {
   name: 'App',
   components: {
-    FormComponent
+    defaultPage
   }
 }
 </script>
@@ -20,6 +20,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
