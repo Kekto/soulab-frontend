@@ -38,21 +38,22 @@ fieldset{
 }
 
 .button-9 {
-  background-color: #0a0a0a;
+  background-color: $extra1;
+  border: 1px solid $extra2;
   border-radius: 6px;
-  border-width: 0;
-  color: #fff;
+  color: $extra2;
   cursor: pointer;
   font-size: 20px;
   height: 44px;
   line-height: 20px;
   margin: 12px 0 0;
   padding: 0 25px;
-  transition: background-color .2s,box-shadow .08s ease-in;
+  transition: background-color,color .2s,box-shadow .08s ease-in;
   user-select: none;
   width: 100%;
 }
 .button-9:hover{
-  background-color: #797979;
+  color: $main1;
+  background-color: $main2;
 }
 </style>

@@ -21,11 +21,18 @@
             />
         </template>
     </FormComponent>
+    <fieldset>
+        <legend>
+            <h3>Users</h3>
+        </legend>
+        <UserTable :users="users"/>
+    </fieldset>
 </template>
 
 <script>
 import FormComponent from '../components/FormComponent.vue';
 import CustomInput from '../components/CustomInput.vue';
+import UserTable from '../components/UserTable.vue'
 import {useUserStore} from '../pinia/user/user.store'
 
 export default {
@@ -41,7 +48,29 @@ export default {
                 firstName: '',
                 lastName: '',
                 email: '',
-            }
+            },
+            users: [
+                {
+                    firstName: 'Mateusz',
+                    lastName: 'Frontendowicz',
+                    email: 'Mateusz@Frontendowicz.com',
+                },
+                {
+                    firstName: 'Mateusz',
+                    lastName: 'Backendowicz',
+                    email: 'Mateusz@Backendowicz.com',
+                },
+                {
+                    firstName: 'Mateusz',
+                    lastName: 'Fullstackowicz',
+                    email: 'Mateusz@Fullstackowicz.com',
+                },
+                {
+                    firstName: 'Mateusz',
+                    lastName: 'Bezrobotowicz',
+                    email: 'Mateusz@Bezrobotowicz.com',
+                },
+            ]
         }
     },
     setup(){
@@ -52,6 +81,7 @@ export default {
   components: {
     FormComponent,
     CustomInput,
+    UserTable
   },
   methods: {
     validate(){
