@@ -3,7 +3,7 @@
     <legend>
       <slot name="title" />
     </legend>
-    <form class="form" @submit="$emit(`submitForm`)">
+    <form class="form" @submit.prevent="$emit(`submitForm`)">
       <slot />
       <button class="button-9" type="submit">Submit</button>
     </form>

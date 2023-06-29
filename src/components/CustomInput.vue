@@ -2,7 +2,7 @@
   <div class="custom-input">
     <label :for="label"> {{ label }}</label>
     <input type="text" placeholder="Please input" :id="label" :value="modelValue" @input="$emit(`update:modelValue`,$event.target.value)">
-    <span v-if="modelValue != ''" class="clear-input" @click="$emit(`update:modelValue`,'')">✕</span>
+    <span v-if="modelValue" class="clear-input" @click="$emit(`update:modelValue`,'')">✕</span>
     <span class="validation-message">{{ validationMessage }}</span>
   </div>
 </template>

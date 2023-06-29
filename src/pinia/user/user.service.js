@@ -3,7 +3,13 @@ import axios from "axios";
 export const userService = {
 	async createUser(data) {
 		return axios
-			.post("http://localhost:8000/user", data)
+			.post("user/history", data)
+			.then((res) => res)
+			.catch((err) => Promise.resolve(err));
+	},
+	async fetchAllUsers() {
+		return axios
+			.get("user/history")
 			.then((res) => res)
 			.catch((err) => Promise.resolve(err));
 	},

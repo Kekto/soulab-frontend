@@ -25,7 +25,7 @@
         <legend>
             <h3>Users</h3>
         </legend>
-        <UserTable :users="users"/>
+        <UserTable :users="this.getAllUsers"/>
     </fieldset>
 </template>
 
@@ -34,6 +34,8 @@ import FormComponent from '../components/FormComponent.vue';
 import CustomInput from '../components/CustomInput.vue';
 import UserTable from '../components/UserTable.vue'
 import {useUserStore} from '../pinia/user/user.store'
+import { useToastStore } from '@/pinia/toast/toast.store';
+import { ToastTypeEnum } from '@/models/enums/ToastType.enum';
 
 export default {
   name: 'default-page',
@@ -48,36 +50,25 @@ export default {
                 firstName: '',
                 lastName: '',
                 email: '',
-            },
-            users: [
-                {
-                    firstName: 'Mateusz',
-                    lastName: 'Frontendowicz',
-                    email: 'Mateusz@Frontendowicz.com',
-                },
-                {
-                    firstName: 'Mateusz',
-                    lastName: 'Backendowicz',
-                    email: 'Mateusz@Backendowicz.com',
-                },
-                {
-                    firstName: 'Mateusz',
-                    lastName: 'Fullstackowicz',
-                    email: 'Mateusz@Fullstackowicz.com',
-                },
-                {
-                    firstName: 'Mateusz',
-                    lastName: 'Bezrobotowicz',
-                    email: 'Mateusz@Bezrobotowicz.com',
-                },
-            ]
+            }
         }
     },
     setup(){
         const userStore = useUserStore();
         const createUser = (data) => userStore.createUser(data);
-        return {createUser}
+        const fetchAllUsers = () => userStore.fetchAllUsers();
+
+        return {userStore, createUser, fetchAllUsers}
     },
+    mounted(){
+        this.fetchAllUsers();
+    },
+    computed:{
+        getAllUsers(){
+            return this.userStore.getAllUsers;
+        }
+    },
+
   components: {
     FormComponent,
     CustomInput,
@@ -103,7 +94,7 @@ export default {
         }
 
         // VALIDATE EMAIL
-        const regex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,4}');
+        const regex = new RegExp('[a-z0-9]+@[a-z]+[.][a-z]{2,4}');
         if(this.user.email.length === 0){
             valid = false;
             this.validation.email = 'Cannot be empty';
@@ -117,7 +108,19 @@ export default {
 
         // SUBMIT
         if(valid){
-            this.createUser(this.user);
+            this.createUser(this.user)
+            .then(() => {
+                this.user = {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                }
+            });
+        }else {
+            useToastStore().addToast({
+                message: 'Data not valid',
+                type: ToastTypeEnum.danger
+            })
         }
     }
   },

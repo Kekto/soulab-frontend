@@ -1,14 +1,17 @@
 <template>
   <defaultPage/>
+  <ToastNotification/>
 </template>
 
 <script>
 import defaultPage from './pages/defaultPage.vue'
+import ToastNotification from './components/ToastNotification.vue';
 
 export default {
   name: 'App',
   components: {
-    defaultPage
+    defaultPage,
+    ToastNotification
   }
 }
 </script>

@@ -1,17 +1,34 @@
 import { defineStore } from "pinia";
 import { userState } from "./user.state";
-// import { userService } from "./user.service";
+import { userService } from "./user.service";
+import { useToastStore } from "../toast/toast.store";
+import { ToastTypeEnum } from "@/models/enums/ToastType.enum.js";
 
 export const useUserStore = defineStore("user", {
 	state: userState,
-	getters: {},
+	getters: {
+		getAllUsers() {
+			return this.users;
+		},
+	},
 	actions: {
-		createUser: async (data) => {
-			// await userService
-			// 	.createUser(data)
-			// 	.then((res) => console.log(res))
-			// 	.catch((err) => console.log(err.message));
-			console.log(data);
+		async createUser(data) {
+			await userService
+				.createUser(data)
+				.then((res) => {
+					this.fetchAllUsers();
+					useToastStore().addToast({
+						message: res.data,
+						type: ToastTypeEnum.success,
+					});
+				})
+				.catch((err) => console.log(err.message));
+		},
+		async fetchAllUsers() {
+			await userService
+				.fetchAllUsers()
+				.then((res) => (this.users = res.data))
+				.catch((err) => console.log(err.message));
 		},
 	},
 });
