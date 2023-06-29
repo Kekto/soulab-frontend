@@ -1,7 +1,8 @@
 <template>
   <div class="custom-input">
     <label :for="label"> {{ label }}</label>
-    <input type="text" :id="label" :value="modelValue" @input="$emit(`update:modelValue`,$event.target.value)">
+    <input type="text" placeholder="Please input" :id="label" :value="modelValue" @input="$emit(`update:modelValue`,$event.target.value)">
+    <span v-if="modelValue != ''" class="clear-input" @click="$emit(`update:modelValue`,'')">✕</span>
     <span class="validation-message">{{ validationMessage }}</span>
   </div>
 </template>
@@ -25,11 +26,11 @@ export default {
 .custom-input{
   display: grid;
   grid-template-areas: 
-  "label input"
-  "message message";
-  grid-template-columns: min-content auto;
-  grid-template-rows: auto 30px;
-  gap: 12px 8px;
+  "label input clear"
+  "message message message";
+  grid-template-columns: min-content auto 8px;
+  grid-template-rows: auto 20px;
+  gap: 2px 8px;
   input {
     grid-area: input;
     justify-self: stretch;
@@ -46,6 +47,14 @@ export default {
     grid-area: message;
     color: red;
     justify-self: flex-end;
+    font-size: 12px;
+    padding-right: 16px;
+  }
+  .clear-input{
+    grid-area: clear;
+    align-self: center;
+    font-weight: bold;
+    cursor: pointer;
   }
   
 }
